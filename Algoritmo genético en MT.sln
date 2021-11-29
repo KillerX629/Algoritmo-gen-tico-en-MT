@@ -1,0 +1,23 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31912.275
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "Algoritmo genético en MT", "Algoritmo genético en MT\Algoritmo genético en MT.pyproj", "{9BC7ED11-6A8A-48F7-9BC4-C4B854F513F4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9BC7ED11-6A8A-48F7-9BC4-C4B854F513F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9BC7ED11-6A8A-48F7-9BC4-C4B854F513F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4525B979-6728-4F28-933B-B870763E7594}
+	EndGlobalSection
+EndGlobal
