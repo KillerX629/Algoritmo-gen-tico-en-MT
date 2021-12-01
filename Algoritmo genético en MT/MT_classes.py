@@ -1,3 +1,59 @@
+
+
+
+class maquinaDeTuring():
+    def __init__(self):
+        self.cinta = []
+        self.posicion = 0
+        self.estado = 0
+
+    def iniciarCinta(self,cinta):
+        self.cinta = cinta
+    
+    def leerCinta(self):
+        return self.cinta[self.posicion]
+    
+    def escribirCinta(self,valor):
+        self.cinta[self.posicion] = valor
+
+    def cambiarEstado(self,stateChange):
+        #stateChange =(ValorAEscribir, Direccion, Estado)
+        self.escribirCinta(stateChange[0])
+        self.posicion += stateChange[1]
+        self.estado = stateChange[2]
+
+    #anatomia de estados de transición: [estado, dirección, valor, nuevo estado]
+    #cinta ejemplo: [P,n,n,n,n,n,F]
+
+
+    #estados de transición:[q0,0]=[0,R,q1]
+    #explicación: si está en el estado q0, y lee un 0, deja el 0, se mueve a la derecha y cambia de estado a q1
+
+    def estadosDeTransicion(self):
+        """el match es un switch de estados de transición, dentro de cada estado de transición hay que
+        definir que pasa cuando se lee un valor"""
+        match self.estado:
+            case 0:
+                esEntero = isinstance(self.leerCinta(),int)
+                match esEntero:
+                    case True:
+                        #si lee un entero, esa posición en la cinta tiene un individuo
+                        pass
+                    case False:
+                        #si lee una letra, esa posición en la cinta tiene un caracter especial
+                        pass
+
+            
+            case _:
+                print("Error: estado no reconocido")
+
+
+
+
+
+
+
+"""
 class Tape(object):
     
     blank_symbol = " "
@@ -69,3 +125,6 @@ class TuringMachine(object):
             return True
         else:
             return False
+
+"""
+
