@@ -1,12 +1,13 @@
 from MT_classes import *
-
-class individuo:
-    def __init__(self, genes):
-        self.genes = genes
-        self.fitness = None
-    
+import math
 
 
+"""se define la función de aptitud como el valor encontrado en la función f(x)=sen(x)*x"""
+def f(x):
+    return math.sin(x)*x
+0
+
+"""usando una implementacion parcial del modelo lógico de máquina de Turing, se resolverá un simple algoritmo genético"""
 
 
 """define la funcion aptitud del algoritmo genético como el valor mas bajo dada una funcion F"""

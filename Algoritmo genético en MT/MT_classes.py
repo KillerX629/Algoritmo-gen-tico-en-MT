@@ -54,10 +54,12 @@ class maquinaDeTuring():
     #estados de transición:[q0,0]=[0,R,q1]
     #explicación: si está en el estado q0, y lee un 0, deja el 0, se mueve a la derecha y cambia de estado a q1
 
+    #los estados de esta máquina de turing le permitiran realizar operaciones genéticas
+
     def estadosDeTransicion(self):
         """el match es un switch de estados de transición, dentro de cada estado de transición hay que
         definir que pasa cuando se lee un valor"""
-        match self.estado:
+        match self.estado:#estado de la máquina de turing
             case 0:
                 esNumero = isinstance(self.leerCinta(),float)
                 match esNumero:
@@ -96,15 +98,28 @@ class maquinaDeTuring():
                         self.cambiarEstado((None,-1,3,None))
                     
                     case False:
-                        pass
+                        self.cambiarEstado((None,1,0,None))
                     
             case 'F':
                 pass
+
+            #para realizar el cruce entre individuos, se combinarán dos individuos al azar y se almacenará el resultado
+            #en el lado derecho de la cinta, después del caracter F
+            case 'C':
+                self.cambiarEstado((self.cruce(self.cinta[0],self.cinta[1]),1,0,None))
+
+
 
             case _:
                 print("Error: estado no reconocido")
 
 
+class individuo:
+    def __init__(self, genes):
+        self.genes = genes
+        self.fitness = None
+        self.state = 0
+    
 
 
 
