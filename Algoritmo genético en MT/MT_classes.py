@@ -1,11 +1,11 @@
-
-
-
 class maquinaDeTuring():
     def __init__(self):
         self.cinta = []
         self.posicion = 0
         self.estado = 0
+        self.memoria = 0
+        self. probCruce = 0.5
+        self.probMutacion = 0.1
 
     def iniciarCinta(self,cinta):
         self.cinta = cinta
@@ -16,12 +16,37 @@ class maquinaDeTuring():
     def escribirCinta(self,valor):
         self.cinta[self.posicion] = valor
 
+    def ejecutar(self):
+        while self.estado != 'F':
+            self.estadosDeTransicion()
+            self.mostrarCinta()
+            print("Estado: ",self.estado)
+            print("Posición: ",self.posicion)
+            print("Memoria: ",self.memoria)
+            print("\n")
+
     def cambiarEstado(self,stateChange):
-        #stateChange =(ValorAEscribir, Direccion, Estado)
-        self.escribirCinta(stateChange[0])
+        #stateChange =(ValorAEscribir, Direccion, Estado, valorAEscribirEnMemoria)
+        if (stateChange[3] != None):
+            self.memoria = stateChange[3]
+        if(stateChange[0] != None):
+            self.escribirCinta(stateChange[0])
         self.posicion += stateChange[1]
         self.estado = stateChange[2]
 
+    def mostrarCinta(self):
+        print({self.cinta})
+    
+    def cruce(self,padre1,padre2):
+        """tomando dos números de la cinta (uno en self.memoria y otro en la posición de la cinta)
+        y cruzando ambos, se obtiene un hijo que será el valor promedio de los dos números"""
+        if random.random() < self.probCruce:
+            hijo = (padre1.memoria + padre2.memoria)/2
+            return hijo
+        else:
+            return self.memoria
+        
+  
     #anatomia de estados de transición: [estado, dirección, valor, nuevo estado]
     #cinta ejemplo: [P,n,n,n,n,n,F]
 
@@ -34,18 +59,51 @@ class maquinaDeTuring():
         definir que pasa cuando se lee un valor"""
         match self.estado:
             case 0:
-                esEntero = isinstance(self.leerCinta(),int)
-                match esEntero:
+                esNumero = isinstance(self.leerCinta(),float)
+                match esNumero:
                     case True:
-                        #si lee un entero, esa posición en la cinta tiene un individuo
+                        #si lee un número, esa posición en la cinta tiene un individuo
                         pass
+
+
                     case False:
                         #si lee una letra, esa posición en la cinta tiene un caracter especial
                         pass
 
+            case 1:#usamos este estado y el estado 2 para hacer un bubble sort de la cinta
+                esNumero = isinstance(self.leerCinta(),float)
+                match esNumero:
+                    case True:
+                        if(self.leerCinta() > self.memoria):
+                            self.cambiarEstado((None,-1,2,self.leerCinta()))
+                        else:
+                            self.cambiarEstado((None,1,1,self.leerCinta()))
+                    case False:
+                        if(self.leerCinta() == 'F'):
+                            self.cambiarEstado((None,1,3,None))
+
+            case 2:
+                esNumero = isinstance(self.leerCinta(),float)
+                match esNumero:
+                    case True:
+                        self.cambiarEstado((self.memoria,1,1,None))
+
             
+            case 3:#el caso 3 moverá la cinta a la izquierda hasta que encuentre un símbolo
+                esNumero = isinstance(self.leerCinta(),float)
+                match esNumero:
+                    case True:
+                        self.cambiarEstado((None,-1,3,None))
+                    
+                    case False:
+                        pass
+                    
+            case 'F':
+                pass
+
             case _:
                 print("Error: estado no reconocido")
+
 
 
 
