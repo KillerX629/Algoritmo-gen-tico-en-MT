@@ -42,6 +42,27 @@ def cruce(padre, madre):
     hijo = madre[:corte] + padre[corte:]
     return hijo
 
+
+def cruceTuring(padre, madre):
+    parentezco = [0, 0, 0, 0]
+
+    MT = maquinaDeTuring(4)
+    for i in range(4):
+        if random.random() < 0.5:
+            parentezco[i]+=1
+    parentezco.append('F')
+    MT.cargarCinta(0, parentezco)
+    MT.cargarCinta(1, madre)
+    MT.cargarCinta(2, padre)
+    MT.cargarCinta(3, [0, 0, 0, 0]) #esta cinta es para guardar el hijo
+    MT.estado = 'Cruce'
+    MT.ejecutar()
+    return(MT.cinta[3].lista)
+    
+    
+    
+
+
 def mutacion(individuo):
     for i in range(4):
         if random.random() < 0.1:
@@ -90,7 +111,7 @@ def main():
         for i in range(len(poblacion)):
             if random.random() < tasaCruce:
                 padres = seleccion_de_padres(poblacion)
-                hijos.append(cruce(padres[0], padres[1]))
+                hijos.append(cruceTuring(padres[0], padres[1]))
         for i in range(len(hijos)):
             if random.random() < tasaMutacion:
                 hijos[i] = mutacion(hijos[i])

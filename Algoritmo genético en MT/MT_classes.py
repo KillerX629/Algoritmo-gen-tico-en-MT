@@ -20,6 +20,9 @@ class cinta():
     def print_cinta(self):
         print(self.lista)
     
+    def print_pos(self):
+        print(self.posicion)
+    
 
     
 
@@ -30,6 +33,7 @@ class cinta():
 class maquinaDeTuring():
     def __init__(self, cantCintas):
         self.cantCintas = cantCintas
+        self.cinta = []
         for i in range(cantCintas):
             self.cinta.append(cinta())
         self.estado = 0
@@ -52,14 +56,14 @@ class maquinaDeTuring():
             self.estado = newStatus
         #stateChange =(ValorAEscribir, Direccion) un None equivale a un lambda, es decir no hace nada
         #cada stateChange es una tupla con los valores que se cambian en la máquina de turing, hay uno por cinta de la MT
-        for i in range(stateChange):
-            if stateChange != None:
+        for i in range(len(stateChange)):
+            if stateChange[i] != None:
                 if stateChange[i][0] != None:
                     self.cinta[i].set_valor(stateChange[i][0])
                 if stateChange[i][1] == 'R':
-                    self.cinta.SHR()
+                    self.cinta[i].SHR()
                 if stateChange[i][1] == 'L':
-                    self.cinta.SHL()
+                    self.cinta[i].SHL()
 
 
     def cargarCinta(self,indice,lista):
@@ -67,11 +71,10 @@ class maquinaDeTuring():
     
     def mostrarMaquina(self):
         print("Estado: ",self.estado)
-        print("Posición: ",self.posicion)
-        print("Memoria: ",self.memoria)
-        print("\n")
-        print("Cinta: ",self.cinta)
-        print("\n")
+        for i in range(len(self.cinta)):
+            print("Cinta ",i,": ",self.cinta[i].lista)
+            print("\tPosicion: ",self.cinta[i].posicion)
+            print("\n")
 
     def getCinta(self,indice):
         return self.cinta[indice].lista
