@@ -37,6 +37,30 @@ def calcular_aptitud(individuo):
             valor_total += vValor[i]
     return valor_total if peso_total <= 20  else 0
 
+
+def aptitud_turing(individuo):
+    MT = maquinaDeTuring(5)
+    individuo.append('F')
+    MT.cargarCinta(0, individuo)
+    MT.cargarCinta(1, [7, 6, 8, 2,'F'])#pesos de los items
+    MT.cargarCinta(2, [4, 5, 6, 3,'F'])#valores de los items
+    MT.cargarCinta(3, ['P',0, 0, 0, 0,'F'])#esta cinta es para guardar el peso total de la mochila
+    MT.cargarCinta(4, ['P',0, 0, 0, 0,'F'])#esta cinta es para guardar el valor total de la mochila
+    MT.estado = 'Aptitud'
+    MT.ejecutar()
+    individuo.remove('F')
+    apt_total = 0
+    peso_total = 0
+    for i in range(4):
+        if MT.cinta[3].lista[i] == 1:
+            if isinstance(MT.cinta[3].lista[i],float):
+                apt_total += MT.cinta[4].lista[i]
+                peso_total += MT.cinta[3].lista[i]
+    return apt_total if peso_total <= 20  else 0
+
+
+
+
 def cruce(padre, madre):
     corte = random.randint(0, 3)
     hijo = madre[:corte] + padre[corte:]
@@ -58,6 +82,21 @@ def cruceTuring(padre, madre):
     MT.estado = 'Cruce'
     MT.ejecutar()
     return(MT.cinta[3].lista)
+
+
+def mutacion_de_turing(individuo):
+    MT = maquinaDeTuring(2)
+    MT.cargarCinta(1, individuo)
+    cintaCambio =[]
+    for i in range(4):
+        cintaCambio.append(random.randint(0, 1))
+    cintaCambio.append('F')
+    individuo.append('F')
+    MT.cargarCinta(0, cintaCambio)
+    MT.estado = 'Mutacion'
+    MT.ejecutar()
+    individuo.remove('F')
+    return(MT.cinta[1].lista)
     
     
     
@@ -71,7 +110,7 @@ def mutacion(individuo):
 
 #creamos una funcion que ordena la poblacion de mayor a menor aptitud
 def seleccion_de_poblacion(poblacion):
-    poblacion.sort(key=calcular_aptitud, reverse=True)
+    poblacion.sort(key=aptitud_turing, reverse=True)
     return poblacion[:100]
 
 #creamos a una funcion que seleccione dos de los mejores individuos  de la poblacion al azar y los cruce
@@ -114,7 +153,7 @@ def main():
                 hijos.append(cruceTuring(padres[0], padres[1]))
         for i in range(len(hijos)):
             if random.random() < tasaMutacion:
-                hijos[i] = mutacion(hijos[i])
+                hijos[i] = mutacion_de_turing(hijos[i])
         poblacion = poblacion + hijos
         mejor_individuo(poblacion)
 

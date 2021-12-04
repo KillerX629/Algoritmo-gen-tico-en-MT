@@ -56,14 +56,15 @@ class maquinaDeTuring():
             self.estado = newStatus
         #stateChange =(ValorAEscribir, Direccion) un None equivale a un lambda, es decir no hace nada
         #cada stateChange es una tupla con los valores que se cambian en la máquina de turing, hay uno por cinta de la MT
-        for i in range(len(stateChange)):
-            if stateChange[i] != None:
-                if stateChange[i][0] != None:
-                    self.cinta[i].set_valor(stateChange[i][0])
-                if stateChange[i][1] == 'R':
-                    self.cinta[i].SHR()
-                if stateChange[i][1] == 'L':
-                    self.cinta[i].SHL()
+        if stateChange != None:
+            for i in range(len(stateChange)):
+                if stateChange[i] != None:
+                    if stateChange[i][0] != None:
+                        self.cinta[i].set_valor(stateChange[i][0])
+                    if stateChange[i][1] == 'R':
+                        self.cinta[i].SHR()
+                    if stateChange[i][1] == 'L':
+                        self.cinta[i].SHL()
 
 
     def cargarCinta(self,indice,lista):
@@ -115,7 +116,39 @@ class maquinaDeTuring():
                 if(self.cinta[0].get() == 'F'):
                     self.cambiarEstado([(None,'R'),(None,'R'),(None,'R'),(None)],'F')
                 
-            case 'F':
+            case 'Mutacion':#para la mutación, se tendrán dos cintas, la cinta [0] es la
+                #cinta de cambio, y la cinta[1] es el individuo a mutar.
+                #los valores donde se encuentra un 1 en la cinta[0], cambiara el valor correspondiente de la cinta[1]
+                if(self.cinta[0].get() == 0):
+                    self.cambiarEstado([(None,'R'),(None,'R')],'Mutacion')
+                if(self.cinta[0].get() == 1):
+                    self.cambiarEstado(None,'Alterar')
+                if(self.cinta[0].get() == 'F'):
+                    self.cambiarEstado(None,'F')
+            
+            case 'Alterar':#en este estado, se ha encontrado un 1 en la cinta de cambio,
+                #se leerá el valor de la cinta[1] y se cambiará por un 0 o un 1, dependiendo de si el valor es 0 o 1
+                if(self.cinta[1].get() == 0):
+                    self.cambiarEstado([(None,'R'),(1,'R')],'Mutacion')
+                if(self.cinta[1].get() == 1):
+                    self.cambiarEstado([(None,'R'),(0,'R')],'Mutacion')
+
+            case 'Aptitud':#para calcular la aptitud de un individuo, se leerá la cinta[0]y
+                #en los lugares donde se encuentre un 1, se sumará al valor total de la cinta [3] y [4](peso y valor de la mochila)
+                #los valores correspondientes.
+                if(self.cinta[3].get() == 'P'):
+                    self.cambiarEstado([None,None,None,(None,'R'),(None,'R')],'F')
+                if(self.cinta[0].get() == 0):
+                    self.cambiarEstado([(None,'R'),(None,'R'),(None,'R'),None,None],'Aptitud')
+                if(self.cinta[0].get() == 1):
+                    self.cambiarEstado([(None,'R'),(None,'R'),(None,'R'),(self.cinta[1].get(),'R'),(self.cinta[2].get(),'R')],'Aptitud')
+                if(self.cinta[0].get() == 'F'):
+                    self.cambiarEstado(None,'F')
+                
+
+                    
+
+            case 'F':#estado final
                 pass    
         
             case _:
