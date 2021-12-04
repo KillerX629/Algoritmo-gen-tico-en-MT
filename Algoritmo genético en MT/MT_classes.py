@@ -102,9 +102,9 @@ class maquinaDeTuring():
             case 'OrdIzq':
                 entero = isinstance(self.cinta.get(),float)
                 if entero:
-
+                    pass
             
-
+            
             case _:
                 print("Error: estado no reconocido")
 
