@@ -9,9 +9,10 @@
  mediante un algoritmo genético, el viajero debe elegir los ítems que llevará en su mochila,
  sabiendo que el peso máximo de la mochila es de 20 kilos, y el valor mínimo de la mochila es de 100 dólares."""
 
-
+from MT_classes import *
 import random
-import math
+#importamos una libreria para generar un GUI
+from tkinter import *
 
 def generar_poblacion(tamano_poblacion):
     poblacion = []
@@ -72,6 +73,10 @@ def calcular_peso(individuo):
             peso_total += vPeso[i]
     
     return peso_total
+
+
+
+
 
 
 def main():

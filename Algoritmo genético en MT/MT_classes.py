@@ -28,14 +28,12 @@ class cinta():
 
 
 class maquinaDeTuring():
-    def __init__(self):
-        self.cinta = cinta
-        self.cintaFitness = cinta
-        self.cintaCruce = cinta
+    def __init__(self, cantCintas):
+        self.cantCintas = cantCintas
+        for i in range(cantCintas):
+            self.cinta.append(cinta())
         self.estado = 0
-        self.memoria = cinta
-        self. probCruce = 0.5
-        self.probMutacion = 0.1
+
 
     
     
@@ -48,18 +46,24 @@ class maquinaDeTuring():
             self.mostrarMaquina()
 
 
-    def cambiarEstado(self,stateChange,stateChange2,stateChange3,stateChange4):
-        #stateChange =(ValorAEscribir, Direccion, Estado, valorAEscribirEnMemoria)
-        if stateChange != None:
-            if (stateChange[3] != None):
-                self.memoria = stateChange[3]
-            if(stateChange[0] != None):
-                self.cinta.set_valor(stateChange[0])
-            self.estado = stateChange[2]
-        if stateChange2 != None:
-            self.estado = stateChange2[2]
-            if(stateChange2[0] != None):
-                self.cinta.set_valor(stateChange2[0])
+    def cambiarEstado(self,stateChange,newStatus):
+        """cambia el estado de la máquina de turing"""
+        if newStatus != None:
+            self.estado = newStatus
+        #stateChange =(ValorAEscribir, Direccion) un None equivale a un lambda, es decir no hace nada
+        #cada stateChange es una tupla con los valores que se cambian en la máquina de turing, hay uno por cinta de la MT
+        for i in range(stateChange):
+            if stateChange != None:
+                if stateChange[i][0] != None:
+                    self.cinta[i].set_valor(stateChange[i][0])
+                if stateChange[i][1] == 'R':
+                    self.cinta.SHR()
+                if stateChange[i][1] == 'L':
+                    self.cinta.SHL()
+
+
+    def cargarCinta(self,indice,lista):
+        self.cinta[indice].lista = lista
     
     def mostrarMaquina(self):
         print("Estado: ",self.estado)
@@ -69,16 +73,8 @@ class maquinaDeTuring():
         print("Cinta: ",self.cinta)
         print("\n")
 
-
-    def cruce(self,padre1,padre2):
-        """tomando dos números de la cinta (uno en self.memoria y otro en la posición de la cinta)
-        y cruzando ambos, se obtiene un hijo que será el valor promedio de los dos números"""
-        if random.random() < self.probCruce:
-            hijo = (padre1.memoria + padre2.memoria)/2
-            return hijo
-        else:
-            return self.memoria
-        
+    def getCinta(self,indice):
+        return self.cinta[indice].lista
   
     #anatomia de estados de transición: [estado, dirección, valor, nuevo estado]
     #cinta ejemplo: 
@@ -99,12 +95,26 @@ class maquinaDeTuring():
         definir que pasa cuando se lee un valor"""
         match self.estado:#estado de la máquina de turing
             
-            case 'OrdIzq':
-                entero = isinstance(self.cinta.get(),float)
-                if entero:
-                    pass
+
             
-            
+            #la operacion de cruce entre dos cintas, se dará por la operacion AND entre la cinta[0](cinta de parentezco) y la cinta[1]
+            #si el resultado de esa operación es 0, el valor [i] del hijo(cinta[3]) se tomará de la cinta[2], sinó se tomará de la cinta[1]
+            case 'Cruce':
+                if(self.cinta[0].get() == 0):
+                    self.cambiarEstado([(None,'R'),(None,'R'),(None,'R'),(self.cinta[2].get(),'R')],'Cruce')
+                
+                if(self.cinta[0].get() == 1):
+                    self.cambiarEstado([(None,'R'),(None,'R'),(None,'R'),(self.cinta[1].get(),'R')],'Cruce')
+                
+                if(self.cinta[0].get() == 'P'):
+                    self.cambiarEstado([(None,'R'),(None,'R'),(None,'R'),(None)],'Cruce')
+                
+                if(self.cinta[0].get() == 'F'):
+                    self.cambiarEstado([(None,'R'),(None,'R'),(None,'R'),(None)],'F')
+                
+            case 'F':
+                pass    
+        
             case _:
                 print("Error: estado no reconocido")
 
@@ -210,54 +220,3 @@ Q = Es un conjunto de estados
         ('a',b,right)
 
 """
-
-def turing_M(estado=None,  # estados de la maquina de turing
-             blanco=None,  # simbolo blanco de el alfabeto dela cinta
-             reglas=[],  # reglas de transicion
-             cinta=[],  # cinta
-             final=None,  # estado valido y/o final
-             pos=0):  # posicion siguiente de la maquina de turing
-    nuevoEstado = estado
-    if not cinta: cinta = [blanco]
-    if pos < 0: pos += len(cinta)
-    if pos >= len(cinta) or pos < 0:
-        raise Error("Se inicializa mal la posicion")
-    reglas = dict(((s0, v0), (v1, dr, s1)) for (s0, v0, v1, dr, s1) in reglas)
-    """Estado	Símbolo leído	Símbolo escrito	  Mov.	   Estado sig.
-       p(s0)        1(v0)	           x(v1)	   R(dr)	 p(s1)
-    """
-    while True: #ver las reglas
-        print(nuevoEstado, '\t', end=" ")
-        for i, contenido in enumerate(cinta):
-            if i == pos:
-                print("[%s]" % (contenido,), end=" ")
-            else:
-                print(contenido, end=" ")
-        print()
-        if nuevoEstado == final: break
-        if (nuevoEstado, cinta [pos]) not in reglas: break
-        (v1, dr, s1) = reglas[(nuevoEstado, cinta[pos])]
-        cinta [pos] = v1
-        # movimiento del cabezal
-        if dr == 'left':
-            if pos > 0:
-                pos -= 1
-            else:
-                cinta.insert(0, blanco)
-        if dr == 'right':
-            pos += 1
-            if pos >= len(cinta): cinta.append(blanco)
-        nuevoEstado = s1
-
-print("Maquina de turing Test")
-turing_M(
-    estado='p',  # estados de la maquina de turing
-    blanco='b',  # simbolo blanco de el alfabeto dela cinta
-    cinta=list("1011"),  # cinta
-    final='q',  # estado valido y/o final
-    reglas=map(tuple,
-               ["p 1 x right p".split(),
-                "p 0 0 right p".split(),
-                "p b b right q".split()]
-               )# reglas de transicion
-        )
