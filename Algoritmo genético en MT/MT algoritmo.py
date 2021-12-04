@@ -1,5 +1,6 @@
 from MT_classes import *
 import math
+import random
 
 
 """se define la función de aptitud como el valor encontrado en la función f(x)=sen(x)*x"""
@@ -28,7 +29,7 @@ def generar_gen():
 def generar_individuos(n):
     individuos = []
     for i in range(n):
-        individuos.append(individuo(generar_gen()))
+        individuos.append(generar_gen())
     return individuos
 
 
@@ -41,10 +42,13 @@ if __name__ == '__main__':
 
    #inicializamos la maquina de turing
     MT = maquinaDeTuring()
-    MT.cinta.append('P')
+    MT.cinta.lista = ['P']
     for i in range(len(nuevaLista)):
-        MT.cinta.append(nuevaLista[i])
-    MT.cinta.append('F')
+        MT.cinta.lista.append(nuevaLista[i])
+    MT.cinta.lista.append('F')
+    #cinta de ejemplo: ['P', '1', '2', '3', '-4', '5', '6', '7', '8', '-9', '10', 'F']
+    #a la cinta de arriba, se le asignara el valor de aptitud de cada individuo
+
 
     #ejecutamos la maquina de turing
     MT.ejecutar()
