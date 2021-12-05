@@ -146,8 +146,8 @@ def calcular_peso(individuo):
 
 def main():
     tasaCruce = 0.5
-    tasaMutacion = 0.1
-    tamano_poblacion = 50
+    tasaMutacion = 0.25
+    tamano_poblacion = 5
     poblacion = generar_poblacion(tamano_poblacion)
     for i in range(20):
         poblacion = seleccion_de_poblacion(poblacion)
