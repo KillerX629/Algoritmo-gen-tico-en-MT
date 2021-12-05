@@ -51,11 +51,13 @@ def aptitud_turing(individuo):
     individuo.remove('F')
     apt_total = 0
     peso_total = 0
-    for i in range(4):
-        if MT.cinta[3].lista[i] == 1:
-            if isinstance(MT.cinta[3].lista[i],float):
-                apt_total += MT.cinta[4].lista[i]
-                peso_total += MT.cinta[3].lista[i]
+    MT.cinta[3].lista.remove('P')
+    MT.cinta[3].lista.remove('F')
+    MT.cinta[4].lista.remove('P')
+    MT.cinta[4].lista.remove('F')
+    for i in range(4):        
+        apt_total += MT.cinta[4].lista[i]
+        peso_total += MT.cinta[3].lista[i]
     return apt_total if peso_total <= 20  else 0
 
 
@@ -86,16 +88,19 @@ def cruceTuring(padre, madre):
 
 def mutacion_de_turing(individuo):
     MT = maquinaDeTuring(2)
-    MT.cargarCinta(1, individuo)
     cintaCambio =[]
     for i in range(4):
-        cintaCambio.append(random.randint(0, 1))
+        if random.random() < 0.1:
+            cintaCambio.append(1)
+        else:
+            cintaCambio.append(0)
     cintaCambio.append('F')
     individuo.append('F')
+    MT.cargarCinta(1, individuo)
     MT.cargarCinta(0, cintaCambio)
     MT.estado = 'Mutacion'
     MT.ejecutar()
-    individuo.remove('F')
+    MT.cinta[1].lista.remove('F')
     return(MT.cinta[1].lista)
     
     
@@ -140,9 +145,9 @@ def calcular_peso(individuo):
 
 
 def main():
-    tasaCruce = 0.8
+    tasaCruce = 0.5
     tasaMutacion = 0.1
-    tamano_poblacion = 5
+    tamano_poblacion = 50
     poblacion = generar_poblacion(tamano_poblacion)
     for i in range(20):
         poblacion = seleccion_de_poblacion(poblacion)
