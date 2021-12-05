@@ -160,6 +160,7 @@ def main():
             if random.random() < tasaMutacion:
                 hijos[i] = mutacion_de_turing(hijos[i])
         poblacion = poblacion + hijos
+        print("\n")
         mejor_individuo(poblacion)
         input("Pulsa enter para continuar")
 

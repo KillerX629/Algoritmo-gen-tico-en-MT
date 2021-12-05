@@ -48,10 +48,13 @@ class maquinaDeTuring():
         pasos = 0
         while self.estado != 'F':
             print("paso n°",pasos)
-            print("\n")
-            self.estadosDeTransicion()
             self.mostrarMaquina()
+            self.estadosDeTransicion()
+            print("\n")
             pasos += 1
+        print("paso n°",pasos," ------------FINAL DEL PROCESO----------------")
+        self.mostrarMaquina()
+        print("\n")
 
 
 
