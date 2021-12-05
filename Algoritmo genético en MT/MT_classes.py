@@ -1,4 +1,3 @@
-
 class cinta():
     def __init__(self) -> None:
         self.posicion = 0
@@ -23,11 +22,6 @@ class cinta():
     def print_pos(self):
         print(self.posicion)
     
-
-    
-
-    
-
 
 
 class maquinaDeTuring():
