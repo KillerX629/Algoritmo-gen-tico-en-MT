@@ -161,6 +161,7 @@ def main():
                 hijos[i] = mutacion_de_turing(hijos[i])
         poblacion = poblacion + hijos
         mejor_individuo(poblacion)
+        input("Pulsa enter para continuar")
 
 
 if __name__ == '__main__':

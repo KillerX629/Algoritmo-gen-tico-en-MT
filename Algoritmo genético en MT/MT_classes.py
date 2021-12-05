@@ -45,9 +45,14 @@ class maquinaDeTuring():
         self.cinta.lista[self.cinta.posicion] = valor
 
     def ejecutar(self):
+        pasos = 0
         while self.estado != 'F':
+            print("paso n°",pasos)
+            print("\n")
             self.estadosDeTransicion()
             self.mostrarMaquina()
+            pasos += 1
+
 
 
     def cambiarEstado(self,stateChange,newStatus):
@@ -73,9 +78,10 @@ class maquinaDeTuring():
     def mostrarMaquina(self):
         print("Estado: ",self.estado)
         for i in range(len(self.cinta)):
-            print("Cinta ",i,": ",self.cinta[i].lista)
-            print("\tPosicion: ",self.cinta[i].posicion)
-            print("\n")
+            print("Cinta ",i,": ",self.cinta[i].lista,end=" ")
+            print("Posicion: ",self.cinta[i].posicion)
+            
+        
 
     def getCinta(self,indice):
         return self.cinta[indice].lista
