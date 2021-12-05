@@ -171,58 +171,6 @@ class maquinaDeTuring():
 
 
 
-"""
-case 0:
-    esNumero = isinstance(self.cinta.get(),float)
-    match esNumero:
-        case True:
-            #si lee un número, esa posición en la cinta tiene un individuo
-            pass
-
-
-        case False:
-            #si lee una letra, esa posición en la cinta tiene un caracter especial
-            pass
-
-case 1:#usamos este estado y el estado 2 para hacer un bubble sort de la cinta
-    esNumero = isinstance(self.cinta.get(),float)
-    match esNumero:
-        case True:
-            if(self.leerCinta() > self.memoria):
-                self.cambiarEstado((None,-1,2,self.leerCinta()))
-            else:
-                self.cambiarEstado((None,1,1,self.leerCinta()))
-        case False:
-            if(self.leerCinta() == 'F'):
-                self.cambiarEstado((None,-1,3,None))
-
-case 2:
-    esNumero = isinstance(self.cinta.get(),float)
-    match esNumero:
-        case True:
-            self.cambiarEstado((self.memoria,1,1,None))
-
-
-case 3:#el caso 3 moverá la cinta a la izquierda hasta que encuentre un símbolo
-    esNumero = isinstance(self.cinta.get(),float)
-    match esNumero:
-        case True:
-            self.cambiarEstado((None,-1,3,None))
-        
-        case False:
-            self.cambiarEstado((None,1,0,None))
-        
-case 'F': #Estado final
-    pass
-
-#para realizar el cruce entre individuos, se combinarán dos individuos al azar y se almacenará el resultado
-#en el lado derecho de la cinta, después del caracter F
-case 'C':
-    self.cambiarEstado((self.cruce(self.cinta[0],self.cinta[1]),1,0,None))
-
-
-"""
-
 
 
 """
