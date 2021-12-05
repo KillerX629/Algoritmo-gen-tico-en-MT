@@ -37,6 +37,7 @@ class maquinaDeTuring():
         for i in range(cantCintas):
             self.cinta.append(cinta())
         self.estado = 0
+        self.show = True #activar o desactivar el logueo de las acciones de la máquina de turing
 
 
     
@@ -47,14 +48,16 @@ class maquinaDeTuring():
     def ejecutar(self):
         pasos = 0
         while self.estado != 'F':
-            print("paso n°",pasos)
-            self.mostrarMaquina()
+            if self.show :
+                print("paso n°",pasos)
+                self.mostrarMaquina()
             self.estadosDeTransicion()
             print("\n")
             pasos += 1
-        print("paso n°",pasos," ------------FINAL DEL PROCESO----------------")
-        self.mostrarMaquina()
-        print("\n")
+        if self.show:
+            print("paso n°",pasos," ------------FINAL DEL PROCESO----------------")
+            self.mostrarMaquina()
+            print("\n")
 
 
 
