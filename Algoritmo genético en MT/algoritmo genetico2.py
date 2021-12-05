@@ -7,7 +7,7 @@
  además, cada uno de los ítems enumerados, tiene un peso y un valor.
  
  mediante un algoritmo genético, el viajero debe elegir los ítems que llevará en su mochila,
- sabiendo que el peso máximo de la mochila es de 20 kilos, y el valor mínimo de la mochila es de 100 dólares."""
+ sabiendo que el peso máximo de la mochila es de 15 kilos, y el valor mínimo de la mochila es de 100 dólares."""
 
 from MT_classes import *
 import random
@@ -58,7 +58,7 @@ def aptitud_turing(individuo):
     for i in range(4):        
         apt_total += MT.cinta[4].lista[i]
         peso_total += MT.cinta[3].lista[i]
-    return apt_total if peso_total <= 20  else 0
+    return apt_total if peso_total <= 15  else 0
 
 
 
@@ -90,7 +90,7 @@ def mutacion_de_turing(individuo):
     MT = maquinaDeTuring(2)
     cintaCambio =[]
     for i in range(4):
-        if random.random() < 0.1:
+        if random.random() < 0.25:
             cintaCambio.append(1)
         else:
             cintaCambio.append(0)
@@ -145,8 +145,13 @@ def calcular_peso(individuo):
 
 
 def main():
-    tasaCruce = 0.5
-    tasaMutacion = 0.25
+    #usamos una tasa de mutación de 1 y una población EXTREMADAMENTE PEQUEÑA
+    #para ilustrar cómo las operaciónes genéticas van aproximandose a la solución
+    #NOTA: en este caso sencillo, hay solo 16 soluciones posibles
+    #los algoritmos genéticos son una herramienta para cuando las soluciones son muy complejas
+    #y no se pueden encontrar por fuerza bruta
+    tasaCruce = 0.7
+    tasaMutacion = 0.25 
     tamano_poblacion = 5
     poblacion = generar_poblacion(tamano_poblacion)
     for i in range(20):
