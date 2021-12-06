@@ -40,6 +40,8 @@ class maquinaDeTuring():
         self.cinta.lista[self.cinta.posicion] = valor
 
     def ejecutar(self):
+        print("#############################################")
+        print("----------INICIO DE EJECUCION--------------")
         pasos = 0
         while self.estado != 'F':
             if self.show :
